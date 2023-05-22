@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.proman.screens
+package at.ac.fhcampuswien.muketa.screens
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.animateFloatAsState
@@ -16,9 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import at.ac.fhcampuswien.muketa.ui.theme.Purple500
 import at.ac.fhcampuswien.muketa.navigation.Screen
 import at.ac.fhcampuswien.muketa.ui.theme.color1
 import at.ac.fhcampuswien.muketa.ui.theme.color2
@@ -26,7 +24,7 @@ import kotlinx.coroutines.delay
 
 
 @Composable
-fun SplashScreen(navController : NavController) {
+fun SplashScreen(navController: NavHostController) {
     var startAnimation by remember {
         mutableStateOf(false)
     }

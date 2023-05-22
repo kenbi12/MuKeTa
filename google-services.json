@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "966786951378",
+    "project_id": "muketa-de4f2",
+    "storage_bucket": "muketa-de4f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966786951378:android:3dbf3f4a362a421b0aa50b",
+        "android_client_info": {
+          "package_name": "at.ac.fhcampuswien.muketa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "966786951378-1ajvi4745i2n2ak9ruj6tekvirsmu09b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTmlF08BtD1-6-2U_fApvJrRh8jfzSLWQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "966786951378-1ajvi4745i2n2ak9ruj6tekvirsmu09b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

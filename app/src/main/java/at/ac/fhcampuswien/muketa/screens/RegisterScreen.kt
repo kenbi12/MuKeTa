@@ -1,11 +1,177 @@
 package at.ac.fhcampuswien.muketa.screens
 
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
+import at.ac.fhcampuswien.muketa.ui.theme.color1
+import at.ac.fhcampuswien.muketa.ui.theme.color2
+import at.ac.fhcampuswien.muketa.viewmodels.LoginViewModel
 
 
 @Composable
-fun RegisterScreen(navController: NavController){
-    Text(text = "RegisterScreen")
+fun RegisterScreen(
+    loginViewModel: LoginViewModel? = null,
+    onNavToHomePage:() -> Unit,
+    onNavToLoginPage:() -> Unit,
+) {
+    val loginUiState = loginViewModel?.loginUiState
+    val isError = loginUiState?.signUpError != null
+    val context = LocalContext.current
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = "Register",
+            style = MaterialTheme.typography.h3,
+            fontWeight = FontWeight.Black,
+            color = color2//MaterialTheme.colors.primary
+        )
+
+        if (isError){
+            Text(
+                text = loginUiState?.signUpError ?: "unknown error",
+                color = Color.Red,
+            )
+        }
+
+        val textFieldColors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = color2,
+            unfocusedBorderColor = color2
+        )
+
+        OutlinedTextField(
+            colors = textFieldColors,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            value = loginUiState?.name ?: "",
+            onValueChange = {loginViewModel?.onNameChange(it)},
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = null,
+                    tint = color2
+                )
+            },
+            label = {
+                Text(text = "Name",color = color2)
+            },
+            isError = isError
+        )
+
+        OutlinedTextField(
+            colors = textFieldColors,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            value = loginUiState?.userNameSignUp ?: "",
+            onValueChange = {loginViewModel?.onUserNameChangeSignup(it)},
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Email,
+                    contentDescription = null,
+                    tint = color2
+                )
+            },
+            label = {
+                Text(text = "Email",color = color2)
+            },
+            isError = isError
+        )
+        OutlinedTextField(
+            colors = textFieldColors,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            value = loginUiState?.passwordSignUp ?: "",
+            onValueChange = { loginViewModel?.onPasswordChangeSignup(it) },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = null,
+                    tint = color2
+                )
+            },
+            label = {
+                Text(text = "Password",color = color2)
+            },
+            visualTransformation = PasswordVisualTransformation(),
+            isError = isError
+        )
+        OutlinedTextField(
+            colors = textFieldColors,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            value = loginUiState?.confirmPasswordSignUp ?: "",
+            onValueChange = { loginViewModel?.onConfirmPasswordChange(it) },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = null,
+                    tint = color2
+                )
+            },
+            label = {
+                Text(text = "Confirm Password",color = color2)
+            },
+            visualTransformation = PasswordVisualTransformation(),
+            isError = isError
+        )
+
+        Button(onClick = { loginViewModel?.createUser(context)
+
+        },colors = ButtonDefaults.buttonColors(backgroundColor = color2)) {
+            Text(text = "Sign Up")
+        }
+        Spacer(modifier = Modifier.size(16.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Already have an Account?")
+            Spacer(modifier = Modifier.size(8.dp))
+            TextButton(onClick = { onNavToLoginPage.invoke() },colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)) {
+                Text(text = "Log In",
+                    style = MaterialTheme.typography.h6,
+                    fontWeight = FontWeight.Black,
+                    color =  color1)
+            }
+
+        }
+
+        if (loginUiState?.isLoading == true){
+            CircularProgressIndicator()
+        }
+
+        LaunchedEffect(key1 = loginViewModel?.hasUser){
+            if (loginViewModel?.hasUser == true){
+                onNavToHomePage.invoke()
+            }
+        }
+
+
+
+
+
+
+
+    }
+
+
 }

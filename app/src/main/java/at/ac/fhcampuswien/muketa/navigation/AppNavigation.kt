@@ -1,23 +1,39 @@
 package at.ac.fhcampuswien.muketa.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import at.ac.fhcampuswien.muketa.screens.StartScreen
-import at.ac.fhcampuswien.proman.screens.SplashScreen
+import at.ac.fhcampuswien.muketa.viewmodels.LoginViewModel
+import at.ac.fhcampuswien.muketa.screens.*
 
 
 @Composable
-fun ScreensNavigation(navController : NavHostController = rememberNavController()){
+fun AppNavigation(navController : NavHostController = rememberNavController(),
+                  loginViewModel: LoginViewModel,
+) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.SplashScreen.route
+        startDestination = NestedRoute.Login.name//Screen.SplashScreen.route
 
     ) {
+
+        authGraph(navController, loginViewModel)
+        homeGraph(navController,loginViewModel)
+    }
+}
+fun NavGraphBuilder.authGraph(navController: NavHostController,
+                              loginViewModel: LoginViewModel,
+){
+
+    navigation(
+        startDestination = Screen.SplashScreen.route,
+        route = NestedRoute.Login.name
+    ){
         composable(route = Screen.SplashScreen.route) {
             SplashScreen(navController = navController)
         }
@@ -26,12 +42,65 @@ fun ScreensNavigation(navController : NavHostController = rememberNavController(
         }
 
         composable(route = Screen.LoginScreen.route) {
-            StartScreen(navController = navController)
-        }
-        composable(route = Screen.RegisterScreen.route) {
-            StartScreen(navController = navController)
+            LoginScreen(
+                onNavToHomePage = {
+                    navController.navigate(NestedRoute.Main.name) {
+                        launchSingleTop = true
+                        popUpTo(route = Screen.LoginScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                },
+                loginViewModel = loginViewModel
+
+            ) {
+                navController.navigate(Screen.RegisterScreen.route) {
+                    launchSingleTop = true
+                    popUpTo(Screen.LoginScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }
         }
 
+
+        composable(route = Screen.RegisterScreen.route) {
+            RegisterScreen(onNavToHomePage = {
+                navController.navigate(NestedRoute.Main.name) {
+                    popUpTo(Screen.RegisterScreen.route) {
+                        inclusive = true
+                    }
+                }
+            },
+                loginViewModel = loginViewModel
+            ) {
+                navController.navigate(Screen.LoginScreen.route)
+            }
+
+        }
 
     }
 }
+
+fun NavGraphBuilder.homeGraph(navController: NavHostController,loginViewModel: LoginViewModel
+
+){
+    navigation(startDestination = Screen.CategoryScreen.route,
+        route = NestedRoute.Main.name
+    ) {
+        composable(route = Screen.CategoryScreen.route) {
+            CategoryScreen(loginViewModel
+            ) {
+                navController.navigate(Screen.StartScreen.route) {
+                    launchSingleTop = true
+                    popUpTo(0) {
+                        inclusive = true
+
+                    }
+                }
+
+            }
+        }
+    }
+}
+

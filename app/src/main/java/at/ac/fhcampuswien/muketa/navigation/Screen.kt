@@ -6,5 +6,10 @@ sealed class Screen(val route: String) {
     object StartScreen : Screen("Start_screen")
     object LoginScreen : Screen("Login_screen")
     object RegisterScreen : Screen("Register_screen")
+    object CategoryScreen : Screen("Category_screen")
 
+}
+enum class NestedRoute{
+    Main,
+    Login
 }
