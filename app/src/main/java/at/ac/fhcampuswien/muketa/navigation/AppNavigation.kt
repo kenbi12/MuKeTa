@@ -82,14 +82,14 @@ fun NavGraphBuilder.authGraph(navController: NavHostController,
     }
 }
 
-fun NavGraphBuilder.homeGraph(navController: NavHostController,loginViewModel: LoginViewModel
+fun NavGraphBuilder.homeGraph(navController: NavHostController,loginViewModel: LoginViewModel,
 
 ){
     navigation(startDestination = Screen.CategoryScreen.route,
         route = NestedRoute.Main.name
     ) {
         composable(route = Screen.CategoryScreen.route) {
-            CategoryScreen(loginViewModel
+            CategoryScreen(loginViewModel,
             ) {
                 navController.navigate(Screen.StartScreen.route) {
                     launchSingleTop = true
