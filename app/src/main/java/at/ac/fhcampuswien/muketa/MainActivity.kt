@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    AppNavigation(loginViewModel = loginViewModel)
+                    AppNavigation(loginViewModel = loginViewModel, mainContext = this)
                 }
             }
         }

@@ -11,6 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,7 +27,7 @@ import at.ac.fhcampuswien.muketa.ui.theme.color2
 @Composable
 fun StartScreen(navController: NavController){
 
-
+    val customFontFamily = FontFamily(Font(R.font.splash))
 
     Surface(
         color = Color.White,
@@ -54,8 +56,9 @@ fun StartScreen(navController: NavController){
                     Text(text = "MuKeTa",
                         modifier = Modifier.size(120.dp),
                         color = Color.White,
-                        fontSize = 30.sp,
+                        fontSize = 27.sp,
                         fontWeight = FontWeight.Bold,
+                        fontFamily = customFontFamily,
                     )
                     Divider()
                     //Text(text = "Start the quizz!", color = Color.LightGray)
